@@ -1,0 +1,52 @@
+
+function get() public view returns (uint) {
+    return count;
+
+}
+
+1. get()  - là tên của function
+2. public view - là loại của function 
+3. returns (uint) - return của hàm này là loại gì  => chú ý là returns (có chữ s)
+
+
+
+=======================
+
+
+có Types of Functions in Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+contract Functions {
+    uint256 private _num;
+
+    function normalFunc(uint256 num_) public {
+        _num = num_;
+    }
+
+    function viewFunc() public view returns (uint256) {
+        return _num;
+    }
+
+    function pureFunc(uint256 a, uint256 b) public pure returns (uint256) {
+        return a + b;
+    }
+
+    function payableFunc() public payable {
+        // ...
+    }
+}
+- view
+    => View functions don’t mutate any state variables, but can read them and return their values.
+    => hàm không làm biến đổi bất kỳ biến trạng thái nào, nhưng có thể đọc chúng và trả về các giá trị của chúng.
+
+
+- pure
+    => Pure functions don’t mutate neither read the contract variables, and are used to perform calculations. The output of a pure function will always be the same given the same set of inputs.
+    => Các hàm không biến đổi cũng không đọc các biến hợp đồng và được sử dụng để thực hiện các phép tính. Đầu ra của một hàm thuần túy sẽ luôn giống nhau với cùng một bộ đầu vào.
+
+- payable
+    => Payable functions are the ones that can receive money (Ether), and are fundamental to all financial transaction on the Ethereum blockchain.
+    => Các chức năng là những chức năng có thể nhận tiền (Ether) và là cơ bản cho tất cả các giao dịch tài chính trên chuỗi khối Ethereum.
+
+
