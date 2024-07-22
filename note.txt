@@ -1,5 +1,105 @@
+* tính thừa kế trong solidity
+
+*  nếu function là 1 private thì bên ngoài không gọi được ,chỉ được gọi trong smart contract đó 
+*  nếu function là 1 internal thì bên ngoài không gọi được , nhưng trong function của contract hoặc những contract được thừa kế (is) với contract đó 
+*  nếu function là 1 external thì bên ngoài gọi được , nhưng không gọi được trong function contract hoặc những contract được thừa kế (is) với contract đó 
+*  nếu là 1 variable thì default của nó là private -> vẫn là private trong smart contract -> nhưng trong blockchain thì không
+*  nếu là 1 variable uint public value ;-> thì không cần tạo ra 1 hàm get để lấy giá trị của biến đó 
 1. ở đầu mỗi file sol phải thêm vào 
     //SPDX-License-Identifier: MIT
 =>  SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" 
 to each source file.
 Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+
+2. claim 0.1 ETH testnest from 
+
+https://faucets.chain.link/sepolia
+
+3. Khi deploy thông qua meta mask sẽ tốn phí 
+
+4. blockchain sẽ tính phí khi change data on blockchain nhưng đối với lấy data về sẽ không tốn phí
+
+5. build smart contract
+
+    - Code SMC : rust, solidity,...
+    - Compile code thành evm bytecode
+    - gửi transaction cotract creation + evm bytecode lên blockchain
+    - chờ trấnction được đào
+
+6. GAS
+    - phí giao dịch
+    - chống spam
+    - trả cho các miner
+
+7. Array
+    - storage Array:
+        + uint[] nameArr; 
+        -> sử dụng ở đâu cũng được
+        + nameArr.push(2); nameArr.push(5) -> [2,5]
+        + nameArr[0] -> 2
+        + nameArr[0] = 3 -> [3,5]
+        + delete nameArr[0] -> [0, 5]
+    - memory Array
+        + uint[] memory nameArr = new uint[](10)
+        -> chỉ sử dụng trong function
+        -> phải khai báo độ dài của Array
+
+8. mapping: giống như object
+    - mapping(address => uint) balancers;
+
+    function foo () externak {
+        // add 
+        balancers[msg.sender]  = 100
+
+        => balancers {
+            msg.sender là 1 address  : 100
+        }
+    }
+
+    - trong trường hợp truyền 1 key không tồn lại trong balancers => 
+        uint return về 0
+        bool return về false
+
+    - nested mapping
+    mapping(address => mapping(address => bool)) balancers;
+9. struct: giống iterface
+    - struct name {
+        uint ID;
+        address addr;
+        string name;
+    }
+
+    -> có thể sử dụng array trong struct
+
+10. event
+    - event deposit(address from, uint amout) -> các tham số muốn truyền ra ngoài 
+
+    function deposit (uint amount) external {
+
+        // đưa sự kiện ra ngoài
+        emit deposit (msg.sender, amount)
+    }
+
+11. Error handling & Modifiers
+
+    // throw, assert, revert
+    // required
+
+    - require(condition, "message false")
+
+    - Modifier CheckA() {
+        require(condition, "message false");
+        _
+    }
+
+    - sử dụng
+
+    ...
+    function foo() public CheckA () {
+
+    }
+    hoặc 
+
+    function foo(uint <tham số>) public CheckA (tham số) {
+        
+    }

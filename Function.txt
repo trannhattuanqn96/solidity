@@ -50,3 +50,5 @@ contract Functions {
     => Các chức năng là những chức năng có thể nhận tiền (Ether) và là cơ bản cho tất cả các giao dịch tài chính trên chuỗi khối Ethereum.
 
 
+==================
+https://docs.soliditylang.org/en/develop/types.html#function-types
